@@ -1,0 +1,288 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        body{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000000;
+        }
+        .container{
+        position: relative;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        }
+        .ring{
+        width: 200px;
+        height: 200px;
+        border: 0px solid black;
+        border-radius: 50%;
+        position: absolute;
+        }
+
+        .ring:nth-child(1){
+        border-bottom-width: 8px;
+        border-color: rgb(255,255,0);
+        animation: rotate1 2s linear infinite;
+        }
+        .ring:nth-child(2){
+        border-bottom-width: 8px;
+        border-color: rgb(0,247,255);
+        animation: rotate2 2s linear infinite;
+        }
+        .ring:nth-child(3){
+        border-bottom-width: 8px;
+        border-color: rgb(0,100,255);
+        animation: rotate3 2s linear infinite;
+        }
+        @keyframes rotate1{
+        0%{
+            transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+        }
+        100%{
+            transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+
+        }
+        }
+        @keyframes rotate2{
+        0%{
+            transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+        }
+        100%{
+            transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+            }
+            }
+        @keyframes rotate3{
+        0%{
+            transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+        }
+        100%{
+            transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+            }
+            }
+		#loading{
+        color: white;
+        }
+        .mainblock{
+        display: none;
+        position: absolute;
+
+
+        }
+        .buttonsbar{
+        position: absolute;
+        width: 570px;
+        left: -730px;
+        top: -740px;
+        text-align: center;
+        margin-top: 360px;
+        }
+        .btn{
+        border: 1px solid #3498db;
+        background: none;
+        padding: 20px 40px;
+        font-size: 20px;
+        font-family: "montserrat";
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.8s;
+        position: relative;
+        overflow: hidden;
+        }
+        .but1,.but2,.but3,.but4{
+        	color: #3498db;
+        }
+        .but1:hover,.but2:hover,.but3:hover{
+        	color: #3498db;
+        }
+        .logo{
+        display: none;
+        position: absolute;
+        left: 1200px;
+        top: 0px;
+        }
+        #form{
+        display: none;
+        }
+        label{
+        color: #3498db;
+        }
+        input{
+        background: #3498db;
+        }
+
+        #support{
+        display: none;
+        }
+        #shop{
+        display: none;
+        }
+
+        #feeds{
+        position: absolute;
+        left: 15px;
+        top: 90px;
+        font-size: 20px;
+        }
+        #addnews{
+        position:absolute;
+        left: 900px;
+        top: 0px;
+        }
+        dialog{
+        position: absolute;
+        left: 550px;
+        top: 250px;
+
+        border-radius: 16px;
+        background: #999999;
+        }
+
+        dialog::backdrop {
+          background-color: rgba(0, 0, 0, 0.8);
+        }
+        .newsap{
+        color:white;
+        position:absolute;
+        left:15px;
+        top:90px;
+        font-size: 20px;
+        }
+    </style>
+    <link rel="manifest" href="manifest.json" />
+
+    
+</head>
+<body>
+<div id="shop">
+    <pre class="newsap">{{data1}}</pre>
+
+    <dialog id="add">
+
+        <p>           Напишите новость!</p>
+
+        <br />
+        <form id="myForm2">
+        <label style="color:white" for="name">Автор:</label>
+          <input style="color:white" type="text" id="name2" name="name" required>
+          <br>
+          <label style="color:white" for="email">Новость:</label>
+          <input type="text" style="color:white" id="email2" name="email" required>
+          <br>
+        <label style="color:white" for="email">Ссылка на фото:</label>
+          <input type="text" style="color:white" id="photo2" name="email" required>
+          <br>
+        <button onclick="Close()">Закрыть</button>
+        <button>Отправить</button>
+        </form>
+    </dialog>
+<button class="btn but4" id="addnews" onclick="Add()">Добавить новость</button>
+</div>
+<div id="support">
+<form id="mysupport">
+  <label for="name">Имя:</label>
+  <input type="text" id="name1" name="name" required>
+  <br>
+  <label for="email">Email:</label>
+  <input type="email" id="email1" name="email" required>
+  <br>
+  <label for="email">Жалоба:</label>
+  <input type="text" id="jaloba" name="jaloba" required>
+  <br>
+  <button type="submit" id="senddata1">Отправить</button>
+</form>
+</div>
+<div id="form">
+    <pre style="color:white" id="feeds">{{data}}</pre>
+<form id="myForm">
+  <label for="name">Имя:</label>
+  <input type="text" id="name" name="name" required>
+  <br>
+  <label for="email">Отзыв:</label>
+  <input type="text" id="email" name="email" required>
+  <br>
+  <button type="submit" id="senddata">Отправить</button>
+</form>
+</div>
+<div class="container" Id="cont">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <a id="loading">Loading...</a>
+</div>
+<div class="logo" id="logoo">
+  <img src="https://hh.ru/employer-logo/1965131.png" />
+ </div>
+ <div class="mainblock" id="mainb">
+
+
+ <div class="buttonsbar">
+ 	<button class="btn but1" onclick="News()">NEWS</button>
+    <button class="btn but2" onclick="Feedback()">FEEDBACK</button>
+    <button class="btn but3" onclick="Support()">SUPPORT</button>
+ </div>
+ </div>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    function Close() {
+        let dialog = document.getElementById("add");
+        dialog.close();
+    }
+    function Add() {
+        let dialog = document.getElementById("add");
+        dialog.showModal();
+    }
+  
+    
+function Feedback() {
+
+	document.getElementById("support").style.display = "none";
+	document.getElementById("shop").style.display = "none";
+	document.getElementById("form").style.display = "block";
+}
+function News() {
+	document.getElementById("form").style.display = "none";
+	document.getElementById("shop").style.display = "block";
+	document.getElementById("support").style.display = "none";
+
+}
+function Support() {
+	document.getElementById("form").style.display = "none";
+	document.getElementById("shop").style.display = "none";
+	document.getElementById("support").style.display = "block";
+
+}
+	function doStuff()
+{
+  setTimeout(continueExecution, 5000)
+}
+doStuff();
+function continueExecution()
+{
+  document.getElementById("cont").style.display = "none";
+  document.getElementById("mainb").style.display = "block";
+  document.getElementById("logoo").style.display = "block";
+  document.getElementById("shop").style.display = "block";
+
+}
+</script>
+<script type="text/javascript" src="test.js" charset="UTF-8"></script>
+<script type="text/javascript" src="serviceworker.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="app.js" charset="UTF-8"></script>
+
+  
+</body>
+</html>
