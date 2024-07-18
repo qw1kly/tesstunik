@@ -1,287 +1,655 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование Отелей</title>
+  <style>
+    /* Общие стили */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
 
-    <style>
-        *{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        }
-        body{
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #000000;
-        }
-        .container{
-        position: relative;
-        display:flex;
-        justify-content: center;
-        align-items: center;
-        }
-        .ring{
-        width: 200px;
-        height: 200px;
-        border: 0px solid black;
-        border-radius: 50%;
-        position: absolute;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .ring:nth-child(1){
-        border-bottom-width: 8px;
-        border-color: rgb(255,255,0);
-        animation: rotate1 2s linear infinite;
-        }
-        .ring:nth-child(2){
-        border-bottom-width: 8px;
-        border-color: rgb(0,247,255);
-        animation: rotate2 2s linear infinite;
-        }
-        .ring:nth-child(3){
-        border-bottom-width: 8px;
-        border-color: rgb(0,100,255);
-        animation: rotate3 2s linear infinite;
-        }
-        @keyframes rotate1{
-        0%{
-            transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
-        }
-        100%{
-            transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    /* Шапка сайта */
+    header {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        }
-        }
-        @keyframes rotate2{
-        0%{
-            transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
-        }
-        100%{
-            transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
-            }
-            }
-        @keyframes rotate3{
-        0%{
-            transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
-        }
-        100%{
-            transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
-            }
-            }
-		#loading{
-        color: white;
-        }
-        .mainblock{
-        display: none;
-        position: absolute;
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
 
+    .logo {
+      width: 150px;
+      height: 150px;
+      background-image: url('https://mudl.ru/wp-content/uploads/2020/12/%D0%93%D0%A3%D0%91%D0%9A%D0%98%D0%9D%D0%A1%D0%9A%D0%98%D0%99-%D0%A3%D0%9D%D0%98%D0%92%D0%95%D0%A0%D0%A1%D0%98%D0%A2%D0%95%D0%A2.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
 
-        }
-        .buttonsbar{
-        position: absolute;
-        width: 570px;
-        left: -730px;
-        top: -740px;
-        text-align: center;
-        margin-top: 360px;
-        }
-        .btn{
-        border: 1px solid #3498db;
-        background: none;
-        padding: 20px 40px;
-        font-size: 20px;
-        font-family: "montserrat";
-        cursor: pointer;
-        margin: 10px;
-        transition: 0.8s;
-        position: relative;
-        overflow: hidden;
-        }
-        .but1,.but2,.but3,.but4{
-        	color: #3498db;
-        }
-        .but1:hover,.but2:hover,.but3:hover{
-        	color: #3498db;
-        }
-        .logo{
-        display: none;
-        position: absolute;
-        left: 1200px;
-        top: 0px;
-        }
-        #form{
-        display: none;
-        }
-        label{
-        color: #3498db;
-        }
-        input{
-        background: #3498db;
-        }
+    .user-info {
+      font-size: 14px;
+      margin-left: 10px;
+    }
 
-        #support{
-        display: none;
-        }
-        #shop{
-        display: none;
-        }
+    .register-btn {
+      background-color: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
 
-        #feeds{
-        position: absolute;
-        left: 15px;
-        top: 90px;
-        font-size: 20px;
-        }
-        #addnews{
-        position:absolute;
-        left: 900px;
-        top: 0px;
-        }
-        dialog{
-        position: absolute;
-        left: 550px;
-        top: 250px;
+    /* Регистрация */
+    .registration-form {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
 
-        border-radius: 16px;
-        background: #999999;
-        }
+    .registration-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 50%;
+    }
 
-        dialog::backdrop {
-          background-color: rgba(0, 0, 0, 0.8);
-        }
-        .newsap{
-        color:white;
-        position:absolute;
-        left:15px;
-        top:90px;
-        font-size: 20px;
-        }
-    </style>
-    <link rel="manifest" href="manifest.json" />
+    .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-    
+    /* Форма бронирования */
+    .booking-form {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-top: 30px;
+    }
+
+    .booking-form h2 {
+      margin-top: 0;
+      font-size: 24px;
+      color: #2c3e50;
+    }
+
+    .booking-form input,
+    .booking-form select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin-bottom: 15px;
+    }
+
+    .booking-form button {
+      background-color: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Результаты поиска */
+    .search-results {
+      margin-top: 30px;
+    }
+
+    .search-results h2 {
+      color: #2c3e50;
+      font-size: 24px;
+    }
+
+    .hotel-card {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+    }
+
+    .hotel-card img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-right: 20px;
+    }
+
+    .hotel-card h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .hotel-card p {
+      margin-bottom: 10px;
+    }
+
+    .hotel-card button {
+      background-color: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Вспомогательные блоки */
+    .auxiliary-blocks {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .auxiliary-block {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 30%;
+    }
+
+    .auxiliary-block h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+
+    .auxiliary-block a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+
+    .auxiliary-block a:hover {
+      text-decoration: underline;
+    }
+  </style>
+<link rel="manifest" href="manifest.json" />
+
 </head>
 <body>
-<div id="shop">
-    <pre class="newsap">{{data1}}</pre>
+  <header>
+    <div class="container">
+      <div style="display: flex; align-items: center;">
+        <h1>Бронирование Отелей</h1>
+      </div>
+      <div>
+        <div class="user-info" id="user-info"></div>
+        <button class="register-btn" id="register-btn">Регистрация</button>
+        <div class="logo"></div>
+      </div>
+    </div>
+  </header>
 
-    <dialog id="add">
+  <div class="registration-form" id="registration-form">
+    <div class="registration-content">
+      <span class="close-button">&times;</span>
+      <h2>Регистрация</h2>
+      <form id="registration-form-content">
+        <input type="text" placeholder="ФИО" id="full-name" required>
+        <input type="tel" placeholder="Номер телефона" id="phone-number" required>
+        <input type="number" placeholder="Год рождения" id="birth-year" required>
+        <input type="password" placeholder="Пароль" id="password" required>
+        <input type="password" placeholder="Подтверждение пароля" id="confirm-password" required>
+        <button type="submit">Зарегистрироваться</button>
+      </form>
+    </div>
+  </div>
 
-        <p>           Напишите новость!</p>
+  <div class="container">
+    <div class="booking-form">
+      <h2>Найдите свой идеальный отель</h2>
+      <form id="search-form">
+        <select id="city" required>
+          <option value="">Выберите город</option>
+          <option value="Москва">Москва</option>
+          <option value="Санкт-Петербург">Санкт-Петербург</option>
+          <option value="Екатеринбург">Екатеринбург</option>
+          <option value="Новосибирск">Новосибирск</option>
+          <option value="Казань">Казань</option>
+          <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+          <option value="Нижний Новгород">Нижний Новгород</option>
+          <option value="Красноярск">Красноярск</option>
+          <option value="Самара">Самара</option>
+          <option value="Омск">Омск</option>
+        </select>
+        <input type="date" placeholder="Дата заезда" required>
+        <input type="date" placeholder="Дата выезда" required>
+        <input type="number" placeholder="Количество гостей" min="1" required>
+        <button type="submit">Найти отели</button>
+      </form>
+    </div>
 
-        <br />
-        <form id="myForm2">
-        <label style="color:white" for="name">Автор:</label>
-          <input style="color:white" type="text" id="name2" name="name" required>
-          <br>
-          <label style="color:white" for="email">Новость:</label>
-          <input type="text" style="color:white" id="email2" name="email" required>
-          <br>
-        <label style="color:white" for="email">Ссылка на фото:</label>
-          <input type="text" style="color:white" id="photo2" name="email" required>
-          <br>
-        <button onclick="Close()">Закрыть</button>
-        <button>Отправить</button>
-        </form>
-    </dialog>
-<button class="btn but4" id="addnews" onclick="Add()">Добавить новость</button>
-</div>
-<div id="support">
-<form id="mysupport">
-  <label for="name">Имя:</label>
-  <input type="text" id="name1" name="name" required>
-  <br>
-  <label for="email">Email:</label>
-  <input type="email" id="email1" name="email" required>
-  <br>
-  <label for="email">Жалоба:</label>
-  <input type="text" id="jaloba" name="jaloba" required>
-  <br>
-  <button type="submit" id="senddata1">Отправить</button>
-</form>
-</div>
-<div id="form">
-    <pre style="color:white" id="feeds">{{data}}</pre>
-<form id="myForm">
-  <label for="name">Имя:</label>
-  <input type="text" id="name" name="name" required>
-  <br>
-  <label for="email">Отзыв:</label>
-  <input type="text" id="email" name="email" required>
-  <br>
-  <button type="submit" id="senddata">Отправить</button>
-</form>
-</div>
-<div class="container" Id="cont">
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <div class="ring"></div>
-    <a id="loading">Loading...</a>
-</div>
-<div class="logo" id="logoo">
-  <img src="https://hh.ru/employer-logo/1965131.png" />
- </div>
- <div class="mainblock" id="mainb">
+    <div class="search-results">
+      <h2>Результаты поиска</h2>
+      <div id="hotel-list"></div>
+    </div>
 
+    <div class="auxiliary-blocks">
+      <div class="auxiliary-block">
+        <h3>Личный кабинет</h3>
+        <p>Управляйте своими бронированиями и профилем.</p>
+        <a href="#">Войти</a>
+      </div>
+      <div class="auxiliary-block">
+        <h3>Служба поддержки</h3>
+        <p>Свяжитесь с нами по телефону или электронной почте.</p>
+        <p>+7 953-747-89-86</p>
+        <p>pashevalexander135790@gmail.com</p>
+      </div>
+      <div class="auxiliary-block">
+        <h3>Гостям</h3>
+        <ul>
+          <li><a href="#" onclick="openBookingInstructions()">Как забронировать жилье</a></li>
+          <li><a href="https://sutochno.ru/help/gosti/guarantees">Гарантии</a></li>
+          <li><a href="#">Вопросы и ответы</a></li>
+        </ul>
+      </div>
+    </div>
 
- <div class="buttonsbar">
- 	<button class="btn but1" onclick="News()">NEWS</button>
-    <button class="btn but2" onclick="Feedback()">FEEDBACK</button>
-    <button class="btn but3" onclick="Support()">SUPPORT</button>
- </div>
- </div>
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="auxiliary-blocks">
+      <div class="auxiliary-block">
+        <h3>Хозяевам жилья</h3>
+        <ul>
 
-<script>
-    function Close() {
-        let dialog = document.getElementById("add");
-        dialog.close();
+          <li><a href="#">Как сдавать жильё</a></li>
+          <li><a href="#">Бесплатное страхование</a></li>
+        </ul>
+      </div>
+      <div class="auxiliary-block">
+        <h3>Помощь</h3>
+        <ul>
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Вакансии</a></li>
+          <li><a href="#">Реквизиты</a></li>
+          <li><a href="#">Реферальная программа</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+      </div>
+    </div>
+  </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+  $("#registration-form-content").on("submit", function (event) {
+    event.preventDefault(); // Отменяем стандартное поведение формы
+
+    // Получаем данные из полей формы
+    const data = {
+      name: $("#full-name").val(),
+      phone: $("#phone-number").val(),
+      year: $("#birth-year").val(),
+      pass: $("#password").val(),
+      dpass: $("#confirm-password").val(),
+    };
+
+    // Отправляем данные на сервер с помощью AJAX
+    $.ajax({
+      url: "/", // Здесь указываем URL-адрес серверного обработчика
+      type: "post",
+      data: data,
+      success: function (response) {
+        // Обработка успешной отправки данных
+        console.log("Данные успешно отправлены!");
+      },
+      error: function (error) {
+        // Обработка ошибок при отправке данных
+        console.error("Ошибка при отправке данных: ", error);
+      },
+    });
+  });
+});
+    const registerBtn = document.getElementById('register-btn');
+    const registrationForm = document.getElementById('registration-form');
+    const closeButton = document.querySelector('.close-button');
+    const registrationFormContent = document.getElementById('registration-form-content');
+    const userInfo = document.getElementById('user-info');
+
+    let currentUser = null;
+
+    registerBtn.addEventListener('click', () => {
+      registrationForm.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', () => {
+      registrationForm.style.display = 'none';
+    });
+
+    registrationFormContent.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const fullName = document.getElementById('full-name').value;
+      const phoneNumber = document.getElementById('phone-number').value;
+      const birthYear = document.getElementById('birth-year').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      if (password === confirmPassword) {
+        currentUser = { fullName, phoneNumber, birthYear };
+        registrationForm.style.display = 'none';
+        updateUserInfo();
+      } else {
+        alert('Пароли не совпадают');
+      }
+    });
+
+    function updateUserInfo() {
+      if (currentUser) {
+        userInfo.textContent = `${currentUser.fullName} | ${currentUser.phoneNumber}`;
+      } else {
+        userInfo.textContent = '';
+      }
     }
-    function Add() {
-        let dialog = document.getElementById("add");
-        dialog.showModal();
+
+    const hotels = [
+      {
+        city: 'Москва',
+        name: 'Отель "Hilton Moscow Leningradskaya"',
+        address: 'ул. Каланчевская, д. 21/40',
+        price: 8000,
+        image: 'https://th.bing.com/th/id/OIP.Fzrvq0oLtxWz5ewfQrseRAHaFj?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Москва',
+        name: 'Отель "Radisson Collection Hotel, Moscow"',
+        address: 'ул. Неглинная, д. 4',
+        price: 12000,
+        image: 'https://th.bing.com/th/id/OIP.jl4WXARJ-Y-sYyiA2BieHgHaJQ?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Москва',
+        name: 'Отель "Marriott Moscow Grand"',
+        address: 'Тверская ул., д. 26/1',
+        price: 10000,
+        image: 'https://thumbs.dreamstime.com/z/moscow-august-grand-hotel-marriott-tverskaya-street-august-town-moscow-russia-one-most-luxurious-hotels-city-30216725.jpg'
+      },
+      {
+        city: 'Санкт-Петербург',
+        name: 'Отель "Four Seasons Hotel Lion Palace St. Petersburg"',
+        address: 'Невский пр., д. 60',
+        price: 15000,
+        image: 'https://th.bing.com/th/id/R.82ce6646bdc6aa4996ed613ea8e883d3?rik=xd%2fcRZB%2fRaKJag&riu=http%3a%2f%2fwhere.ru%2fupload%2fmedialibrary%2feb7%2feb7accb3b7bb31a6eecfe8d519ff9a8a.jpg&ehk=NGFYREe6ywFOTvyrKs61zJUo4Ja1QuFYKCoVIrAwfXY%3d&risl=&pid=ImgRaw&r=0'
+      },
+      {
+        city: 'Санкт-Петербург',
+        name: 'Отель "Grand Hotel Europe"',
+        address: 'Михайловская ул., д. 1/7',
+        price: 14000,
+        image: 'https://th.bing.com/th/id/R.913605947744070ae9cab752c6dac61a?rik=owzLfBsmdIT1uQ&pid=ImgRaw&r=0'
+      },
+      {
+        city: 'Санкт-Петербург',
+        name: 'Отель "Kempinski Hotel Moika 22"',
+        address: 'наб. реки Мойки, д. 22',
+        price: 12000,
+        image: 'https://th.bing.com/th/id/OIP.yOrj7nGD667qMz9qGgBPOQHaFA?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Екатеринбург',
+        name: 'Отель "Hyatt Regency Ekaterinburg"',
+
+        address: 'пр. Ленина, д. 8',
+        price: 7000,
+        image: 'https://th.bing.com/th/id/OIP.XqwjcwoI8Hc8pg32UGV_TgHaE8?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Екатеринбург',
+        name: 'Отель "Majestic"',
+        address: 'пр. Ленина, д. 24а',
+        price: 5500,
+        image: 'https://th.bing.com/th/id/OIP.wxeNK1SJzIJOf-jRybETcgHaFS?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Новосибирск',
+        name: 'Отель "Marriott Novosibirsk"',
+        address: 'Красный пр., д. 32',
+        price: 6000,
+        image: 'https://th.bing.com/th/id/R.71b2dc12232a8e8e36db88c53d2f9165?rik=egnttHVPtYff%2bA&pid=ImgRaw&r=0'
+      },
+      {
+        city: 'Новосибирск',
+        name: 'Отель "Domina Novosibirsk"',
+        address: 'ул. Кирова, д. 86',
+        price: 5000,
+        image: 'https://th.bing.com/th/id/R.8db217ceaa049c1e1f46371fc8507b7c?rik=eRrJySAY%2bdZvxg&riu=http%3a%2f%2fphotos.wikimapia.org%2fp%2f00%2f05%2f02%2f47%2f02_full.jpg&ehk=DiByw%2bOyZTgAqOD2BEOAeXTm%2fraqeBWHbk9lQmBCsCU%3d&risl=&pid=ImgRaw&r=0'
+      },
+      {
+        city: 'Новосибирск',
+        name: 'Отель "Park Inn by Radisson Novosibirsk"',
+        address: 'ул. Железнодорожная, д. 17',
+        price: 4500,
+        image: 'https://th.bing.com/th/id/OIP.Q5ZanVhhNODkzkVdd4TrHwHaE8?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Казань',
+        name: 'Отель "Kazan Palace by Tasigo"',
+        address: 'ул. Пушкина, д. 4',
+        price: 6500,
+        image: 'https://cf.bstatic.com/xdata/images/hotel/max500/208667776.jpg?k=63f7a3564a95e16bd05005091ead05910ae95d2fa3e77df072aa3f947aa4934d&o=&hp=1'
+      },
+      {
+        city: 'Казань',
+        name: 'Отель "Korston"',
+        address: 'пр. Фатыха Амирхана, д. 1',
+        price: 5000,
+        image: 'https://hotel-13.ru/wp-content/uploads/2022/10/5-korston-kazan-e1666712714400.jpg'
+      },
+      {
+        city: 'Казань',
+        name: 'Отель "Relita"',
+        address: 'ул. Московская, д. 35',
+        price: 4000,
+        image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/172244004.jpg?k=b89291f781b1941761726cc53df21580c0bd412c16630f81580cb0ad697f4e87&o=&hp=1'
+      },
+      {
+        city: 'Ростов-на-Дону',
+        name: 'Отель "Don Plaza"',
+        address: 'пр. Будённовский, д. 59',
+        price: 5500,
+        image: 'https://th.bing.com/th/id/OIP.OshB6bb91fETxbf5v-H2KgHaE8?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Ростов-на-Дону',
+        name: 'Отель "Thalasso Plaza"',
+        address: 'ул. Большая Садовая, д. 115',
+        price: 4800,
+        image: 'https://img.ev.mu/images/hotels/1468/1605x642/688344.jpg'
+      },
+      {
+        city: 'Ростов-на-Дону',
+        name: 'Отель "Sheraton Rostov-on-Don"',
+        address: 'ул. Седова, д. 7',
+        price: 7000,
+        image: 'https://th.bing.com/th/id/OIP.GG07RmYr8qb3Xju-wGQXYwHaFL?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Нижний Новгород',
+        name: 'Отель "Sheraton Nizhny Novgorod Kremlin"',
+        address: 'Георгиевский съезд, д. 1',
+        price: 8000,
+        image: 'https://media-cdn.tripadvisor.com/media/photo-s/11/4a/35/b0/sheraton-nizhny-novgorod.jpg'
+      },
+      {
+        city: 'Нижний Новгород',
+        name: 'Отель "Radisson Blu Hotel, Nizhny Novgorod"',
+        address: 'ул. Интернациональная, д. 2В',
+        price: 7500,
+        image: 'https://th.bing.com/th/id/OIP.rQVAR17fuFBhM8yPqsPUTAAAAA?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Нижний Новгород',
+        name: 'Отель "DoubleTree by Hilton Nizhny Novgorod"',
+        address: 'ул. Горького, д. 252',
+        price: 6000,
+        image: 'https://st.depositphotos.com/1748914/1471/i/600/depositphotos_14712211-stock-photo-bolshaya-pokrovskaya-street.jpg'
+      },
+      {
+        city: 'Красноярск',
+        name: 'Отель "Hilton Garden Inn Krasnoyarsk"',
+        address: 'ул. Партизана Железняка, д. 24',
+        price: 6000,
+        image: 'https://usk-sibiryak.ru/wp-content/uploads/2017/06/hilton-3_1150-1100x450-1-1100x450.jpg'
+      },
+      {
+        city: 'Красноярск',
+        name: 'Отель "Marriott Krasnoyarsk"',
+        address: 'ул. Дубровинского, д. 1',
+        price: 7000,
+        image: 'https://th.bing.com/th/id/OIP.SH99QBIOEeOxEFtqtD39_AHaEZ?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Красноярск',
+        name: 'Отель "Holiday Inn Krasnoyarsk"',
+        address: 'ул. Карла Маркса, д. 92',
+        price: 5500,
+        image: 'https://media-cdn.tripadvisor.com/media/vr-splice-j/02/f8/32/d7.jpg'
+      },
+      {
+        city: 'Самара',
+        name: 'Отель "Lotte Hotel Samara"',
+        address: 'ул. Алексея Толстого, д. 99',
+        price: 7000,
+
+        image: 'https://th.bing.com/th/id/OIP.6ZfJEQlYwpjurfIPfH9TmgHaEK?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Самара',
+        name: 'Отель "Courtyard by Marriott Samara"',
+        address: 'пр. Ленина, д. 14',
+        price: 6000,
+        image: 'https://th.bing.com/th/id/OIP.cFNb_cl1nuYxrUYRfIQLnQHaE8?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Самара',
+        name: 'Отель "Ramada by Wyndham Samara"',
+        address: 'ул. Максима Горького, д. 82',
+        price: 5000,
+        image: 'https://th.bing.com/th/id/R.b7fbbc7420a2e49425ca8b96e194d554?rik=TTtjBxi5fqMfIA&pid=ImgRaw&r=0'
+      },
+      {
+        city: 'Омск',
+        name: 'Отель "Ibis Omsk Center"',
+        address: 'ул. Партизанская, д. 5/1',
+        price: 4000,
+        image: 'https://th.bing.com/th/id/R.f42da0e81c52ec513347e7c82f6aa922?rik=3IC3W4wBRQtunQ&pid=ImgRaw&r=0'
+      },
+      {
+        city: 'Омск',
+        name: 'Отель "Hilton Garden Inn Omsk"',
+        address: 'пр. Карла Маркса, д. 18',
+        price: 5000,
+        image: 'https://th.bing.com/th/id/OIP.4l7OBnou9uQBjrDeWNZ55AHaG-?rs=1&pid=ImgDetMain'
+      },
+      {
+        city: 'Омск',
+        name: 'Отель "Radisson Blu Омск"',
+        address: 'ул. Орджоникидзе, д. 4',
+        price: 6000,
+        image: 'https://th.bing.com/th/id/OIP.ZwF5OkUiqT15fY-Mk7cx2wHaE8?rs=1&pid=ImgDetMain'
+      }
+    ];
+    const hotelList = document.getElementById('hotel-list');
+
+    function displayHotels(city) {
+      hotelList.innerHTML = '';
+      const filteredHotels = hotels.filter(hotel => hotel.city === city);
+
+      filteredHotels.forEach(hotel => {
+        const hotelCard = document.createElement('div');
+        hotelCard.classList.add('hotel-card');
+
+        hotelCard.innerHTML = `
+          <img src="${hotel.image}" alt="${hotel.name}">
+          <div>
+            <h3>${hotel.name}</h3>
+            <p>${hotel.address}</p>
+            <p>Цена за ночь: ${hotel.price} руб.</p>
+            <button>Забронировать</button>
+          </div>
+        `;
+
+        hotelList.appendChild(hotelCard);
+      });
     }
-  
-    
-function Feedback() {
+function openBookingInstructions() {
+      var instructionsWindow = window.open('', '_blank', 'width=800,height=600');
+      instructionsWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="ru">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Как забронировать жильё</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              padding: 20px;
+              background-color: #f0f0f0;
+            }
+            h2 {
+              color: #2c3e50;
+            }
+            p {
+              margin-bottom: 10px;
+            }
+          </style>
+        </head>
+        <body>
+          <h2>Как забронировать жильё</h2>
+          <p>1. Введите город, даты заезда и выезда, а также количество гостей.</p>
+          <p>2. Нажмите кнопку "Найти отели".</p>
+          <p>3. Просмотрите доступные варианты и выберите подходящий отель.</p>
+          <p>4. Нажмите кнопку "Забронировать" рядом с выбранным отелем.</p>
+          <p>5. Введите свои данные и подтвердите бронирование.</p>
+        </body>
+        </html>
+      `);
+      instructionsWindow.document.close();
+    }
 
-	document.getElementById("support").style.display = "none";
-	document.getElementById("shop").style.display = "none";
-	document.getElementById("form").style.display = "block";
-}
-function News() {
-	document.getElementById("form").style.display = "none";
-	document.getElementById("shop").style.display = "block";
-	document.getElementById("support").style.display = "none";
-
-}
-function Support() {
-	document.getElementById("form").style.display = "none";
-	document.getElementById("shop").style.display = "none";
-	document.getElementById("support").style.display = "block";
-
-}
-	function doStuff()
-{
-  setTimeout(continueExecution, 5000)
-}
-doStuff();
-function continueExecution()
-{
-  document.getElementById("cont").style.display = "none";
-  document.getElementById("mainb").style.display = "block";
-  document.getElementById("logoo").style.display = "block";
-  document.getElementById("shop").style.display = "block";
-
-}
-</script>
+    document.getElementById('search-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const city = document.getElementById('city').value;
+      displayHotels(city);
+    });
+  </script>
 <script type="text/javascript" src="serviceworker.js" charset="UTF-8"></script>
-
 <script type="text/javascript" src="app.js" charset="UTF-8"></script>
-
-  
 </body>
 </html>
